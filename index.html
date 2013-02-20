@@ -1,0 +1,46 @@
+<html>
+
+<head>
+  <title>PNG Mask Test</title>
+  <style>
+  body {
+    background: gray;
+  }
+  </style>
+  
+  <script>
+  function main() {
+    
+    // Get canvas
+    var canvas = document.querySelector('#subject');
+    var ctx = canvas.getContext('2d');
+    
+    // Load image and draw to canvas
+    var img = new Image();
+    img.onload = function() {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+    }
+    img.src = 'CFHTLS_082_0389.png';
+    
+    // Setup onclick for canvas
+    canvas.onclick = function(e) {
+      var x = e.offsetX;
+      var y = e.offsetY;
+      
+      var pixel = ctx.getImageData(x, y, 1, 1);
+      var alpha = pixel.data[3];
+      if (alpha === 255) {
+        alert('whoa!  wicked catch, you found a gravitational lens');
+      }
+    }
+    
+  }
+  </script>
+</head>
+
+<body onload="main()">
+  <canvas id='subject'></canvas>
+</body>
+</html>
