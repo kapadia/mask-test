@@ -1,0 +1,66 @@
+<html>
+
+<head>
+  <title>PNG Mask Test</title>
+  <style>
+  body {
+    background: #FAFAFA;
+  }
+  </style>
+  
+  <script>
+  function setup(canvas, imgPath) {
+    var ctx = canvas.getContext('2d');
+    var img = new Image();
+    img.onload = function() {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+    }
+    img.src = 'images/' + imgPath;
+    
+    canvas.onclick = function(e) {
+      var x = e.offsetX;
+      var y = e.offsetY;
+      
+      var pixel = ctx.getImageData(x, y, 1, 1);
+      var alpha = pixel.data[3];
+      if (alpha === 255) {
+        alert('whoa!  wicked catch, you found a gravitational lens');
+      }
+    }
+  }
+  
+  function main() {
+    
+    var images = [
+      "CFHTLS_082_0129.png",
+      "CFHTLS_082_0178.png",
+      "CFHTLS_082_0183.png",
+      "CFHTLS_082_0306.png",
+      "CFHTLS_082_0308.png",
+      "CFHTLS_082_0338.png",
+      "CFHTLS_082_0389.png",
+      "CFHTLS_082_0390.png"
+    ];
+    
+    var canvases = document.querySelectorAll('canvas');
+    for (var i = 0; i < images.length; i += 1) {
+      setup(canvases[i], images[i]);
+    }
+    
+  }
+  </script>
+</head>
+
+<body onload="main()">
+  <canvas class='whoa'></canvas>
+  <canvas class='whoa'></canvas>
+  <canvas class='whoa'></canvas>
+  <canvas class='whoa'></canvas>
+  <canvas class='whoa'></canvas>
+  <canvas class='whoa'></canvas>
+  <canvas class='whoa'></canvas>
+  <canvas class='whoa'></canvas>
+</body>
+</html>
